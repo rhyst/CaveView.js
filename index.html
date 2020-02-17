@@ -51,10 +51,10 @@
 </head>
 <body onload="onload();" >
 
-<script type="text/javascript" src="CaveView/lib/Detector.js"></script>
-<script type="text/javascript" src="CaveView/js/CaveView2.js" ></script>
+<script type="text/javascript" src="/CaveView.js/CaveView/lib/Detector.js"></script>
+<script type="text/javascript" src="/CaveView.js/CaveView/js/CaveView2.js" ></script>
 
-<script type="text/javascript" src="CaveView/lib/OSMProvider.js" ></script>
+<script type="text/javascript" src="/CaveView.js/CaveView/lib/OSMProvider.js" ></script>
 <script type="text/javascript" src="demoscript.js" ></script>
 
 <script type="text/javascript" >
@@ -139,9 +139,9 @@ function onload () {
 	}
 
 	viewer = new CV2.CaveViewer( 'scene', {
-		home: 'CaveView/',
-		terrainDirectory: 'terrain/',
-		surveyDirectory: 'surveys/',
+		home: '/CaveView.js/CaveView/',
+		terrainDirectory: '/CaveView.js/terrain/',
+		surveyDirectory: '/CaveView.js/surveys/',
 		view: {
 			shadingMode: CV2.SHADING_SINGLE,
 			entrances: false,
@@ -171,8 +171,8 @@ function onload () {
 <h3>Features</h3>
 <p>Displays:</p>
 <ul>
-<li><a href="http://survex.com/" >Survex</a> .3d</li>
-<li><a href="http://therion.speleo.sk/" >Therion</a> .lox models</li>
+<li><a href="https://survex.com/" >Survex</a> .3d</li>
+<li><a href="https://therion.speleo.sk/" >Therion</a> .lox models</li>
 <li>Terrain and "Slippy Map" overlays</li>
 </ul>
 <p>No plugins required.</p>
