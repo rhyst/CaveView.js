@@ -10,13 +10,6 @@
 			margin-left: 20px;
 		}
 
-		h1 {
-			background-image: url(CaveView/images/logo48.png);
-			padding-left: 52px;
-			background-repeat: no-repeat;
-			line-height: 48px;
-		}
-
 		div#scene-box {
 			box-sizing: border-box;
 			width: 66.666%;
@@ -59,44 +52,80 @@
 <body onload="onload();" >
 
 <script type="text/javascript" src="CaveView/lib/Detector.js"></script>
-<script type="text/javascript" src="CaveView/js/CaveView.js" ></script>
+<script type="text/javascript" src="CaveView/js/CaveView2.js" ></script>
 
 <script type="text/javascript" src="CaveView/lib/OSMProvider.js" ></script>
-<script type="text/javascript" src="CaveView/lib/demoscript.js" ></script>
+<script type="text/javascript" src="demoscript.js" ></script>
 
 <script type="text/javascript" >
 "use strict";
 
+var viewer;
+var ui;
 var captionDiv;
 var index = 0;
 var routes;
+var firstRun = true;
+
+const defaultView = {
+	entrances: false,
+	cameraType: CV2.CAMERA_PERSPECTIVE,
+	box: true,
+	shadingMode: CV2.SHADING_HEIGHT,
+	terrain: true,
+	terrainShading: CV2.SHADING_SHADED,
+	walls: true,
+	HUD: true,
+	entrances: true
+};
 
 function runDemo() {
 
 	if ( index === demoScript.length ) return;
 
 	var d = demoScript[ index++ ];
-	var property;
 
 	captionDiv.textContent = d.caption;
 
+	if ( d.endScript ) {
+
+		ui = new CV2.CaveViewUI( viewer );
+
+		ui.loadCaveList( [
+			"Castleton_Master_NoSurface.3d",
+			"all.3d",
+		] );
+
+		firstRun = false;
+
+		return;
+
+	}
+
 	var view = d.view;
 
-	if ( view ) for ( property in view ) CV.Viewer[ property ] = view[ property ];
+	if ( view ) viewer.setView( view );
 
-	// if ( d.route ) routes.setRoute = d.route;
+	if ( d.route ) routes.setRoute = d.route;
 
-	setTimeout( runDemo, d.delay * 1000 );
+	setTimeout( runDemo, d.delay * 1000 )
 
 }
 
 function viewComplete () {
 
-	if ( index ) return; // view complete called on cut operation.
+	if ( firstRun ) {
 
-	// routes = CV.Viewer.getRoutes();
+		if ( index ) return; // view complete called on cut operation.
+		routes = viewer.routeNames;
+		runDemo();
 
-	runDemo();
+	} else {
+
+		viewer.setView( defaultView );
+		captionDiv.textContent = '';
+
+	}
 
 }
 
@@ -109,27 +138,24 @@ function onload () {
 
 	}
 
-	CV.Viewer.init( 'scene', {
+	viewer = new CV2.CaveViewer( 'scene', {
 		home: 'CaveView/',
-		terrainDirectory: '/CaveView.js/terrain/',
-		surveyDirectory: '/CaveView.js/surveys/',
-		saturatedGradient: true,
+		terrainDirectory: '/terrain/',
+		surveyDirectory: '/surveys/',
 		view: {
-			shadingMode: CV.SHADING_SINGLE,
+			shadingMode: CV2.SHADING_SINGLE,
 			entrances: false,
 			box: false,
 			HUD: false,
-			walls: false,
-			terrainDatumShift: false
+			walls: false
 		}
 	} );
 
-	CV.Viewer.addOverlay( 'OSM', new OSMProvider() );
+	viewer.addOverlay( 'OSM', new OSMProvider() );
+	viewer.addEventListener( 'newCave', viewComplete );
 
-	CV.Viewer.addEventListener( 'newCave', viewComplete );
-
-	CV.Viewer.clearView();
-	CV.Viewer.loadCave( 'P8_Master.3d' );
+	viewer.clearView();
+	viewer.loadCave( 'P8_Master.3d' );
 
 	captionDiv = document.getElementById( 'scene-caption' );
 
@@ -137,39 +163,39 @@ function onload () {
 
 </script>
 <h1>Cave View</h1>
-<h2>... a 3D cave survey viewer for the web, version 1.15.0.</h2>
-<div id="scene-box">
+<h2>... a 3D cave survey viewer for the web, version 2.0.0</h2>
+<div id="scene-box" >
 <div id="scene" class="cv-container" ><div id="scene-caption" ></div></div>
 </div>
 <div id="info" >
 <h3>Features</h3>
 <p>Displays:</p>
 <ul>
-<li><a href="https://survex.com/" >Survex</a> .3d</li>
-<li><a href="https://therion.speleo.sk/" >Therion</a> .lox models</li>
-<li><a href="http://www.fountainware.com/compass/index.htm" >Compass</a> .plt models<br>(experimental)</li>
+<li><a href="http://survex.com/" >Survex</a> .3d</li>
+<li><a href="http://therion.speleo.sk/" >Therion</a> .lox models</li>
 <li>Terrain and "Slippy Map" overlays</li>
 </ul>
 <p>No plugins required.</p>
+<h3>Demos</h3>
+<p><a href="demo1.html" >Multiple instances</a></p>
+<p><a href="demo2.html" >DTM and Cesium terrain</a></p>
 <p>Tested with the following browsers:</p>
 <ul>
-<li>Google Chrome 72<br>(desktop and mobile)</li>
-<li>Firefox 65</li>
+<li>Google Chrome 80</li>
+<li>Firefox 73</li>
 <li>Internet Explorer 11</li>
 <li>Microsoft Edge</li>
-<li>Opera 54</li>
+<li>Opera 38</li>
 <li>Safari 9.1 (on iOS and OS X)</li>
 </ul>
-<h3>Information</h3>
-<p>Release date: 02/03/2019</p>
-<p><a href="fulldemo.html" >Full Demo with UI</a></p>
-<p><a href="https://github.com/aardgoose/CaveView.js/releases" >Release Notes: 1.15.0</a></p>
+<h3>Information (to be updated)</h3>
+<p>Release date: 17/02/2020</p>
+<p><a href="https://github.com/aardgoose/CaveView.js/releases" >Release Notes: 2.0.0</a></p>
 <p><a href="installation.html" >Installation instructions</a></p>
 <p><a href="build.html" >Building instructions</a></p>
 <p><a href="reference.html" >API Reference</a></p>
-<p><a href="translation.html" >Adding translations</a></p>
-<p><a href="https://github.com/aardgoose/CaveView.js/tree/1.15.0" >Source code available here.</a></p>
-<p><a href="https://threejs.org/" >Built with three.js r100</a></p>
+<p><a href="https://github.com/aardgoose/CaveView.js/tree/2.0.0" >Source code available here.</a></p>
+<p><a href="https://threejs.org/" >Built with three.js r113</a></p>
 </div>
 <div id="credits">
 <p>Contains Ordnance Survey data &copy; Crown copyright and database right 2015.</p>
