@@ -38,6 +38,7 @@ pre {
 
 dd > span {
 	display: inline-block;
+	padding: 0 2px;
 	margin-right: 5px;
 	background: #aaaaaa;
 }
