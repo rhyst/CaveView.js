@@ -6,9 +6,9 @@
 	<link type="text/css" href="doc.css" rel="stylesheet"/>
 </head>
 <body>
-<h1>Cave View - Reference</h1>
-<p>The following functions and objects are stable. Any other functions may change without warning.</p>
-
+<h1>Cave View - Reference - v2 API</h1>
+<p>The following objects and methods are stable. Any other functions may change without warning.</p>
+<p>The v2 API allows muliple independent viewers to be created and destroyed dynamically at run time.</p>
 <h2>CaveView Object</h2>
 
 <h3>Constructor</h3>
@@ -17,8 +17,8 @@
 <p>Initialise CaveView with no user interface other than mouse controls - a blank screen is displayed.</p>
 <h5>Parameters</h5>
 <dl>
-		<dt>id</dt><dd><span>string</span>The id property of the HTML element where the model will be displayed.</dd>
-		<dt>configuration Object</dt><dd><span>Object</span>An Javascript object defined below.</dd>
+	<dt>id</dt><dd><span>string</span>The id property of the HTML element where the model will be displayed.</dd>
+	<dt>configuration Object</dt><dd><span>Object</span>An Javascript object defined below.</dd>
 </dl>
 
 <h3>Methods</h3>
@@ -100,8 +100,6 @@
 	<dd><span>string</span> The suffix of a UI translation file to load (CaveView/lib/lang-<i>language</i>.json).</dd>
 	<dt>loadMetadata</dt>
 	<dd><span>boolean</span>Attempt to load optional JSON metadata file [default: false]. (optional).</dd>
-	<dt>saturatedGradient</dt>
-	<dd><span>boolean</span>Use more saturated colours in gradients for several shading modes (true) or original mode [default: false]. (optional).</dd>
 	<dt>showEditPage</dt>
 	<dd><span>boolean</span>Display the metadata edit page [default: false]. (optional).</dd>
 	<dt>surveyDirectory</dt>
@@ -110,6 +108,8 @@
 	<dd><span>string</span>The path of the directory containing terrain tiles (optional).</dd>
 	<dt>theme</dt>
 	<dd><span>Object</span>An object, that allows the display colour scheme to be changed. <a href="theme.html" >See annotated default setttings here</a>.</dd>
+	<dt>useGPS</dt>
+	<dd><span>boolean</span>Experimental feature to provide an AR style view [default: false]. (optional).</dd>
 	<dt>view</dt>
 	<dd><span>Object</span>An object, the properties of which determine the view settings applied to all models when loaded (optional).</dd>
 </dl>
