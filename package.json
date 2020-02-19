@@ -1,5 +1,4 @@
 {
-
   "name": "CaveView",
   "version": "1.2.2",
   "description": "3D Cave Survey Viewer",
@@ -19,7 +18,15 @@
     "type": "git",
     "url": "git+https://github.com/aardgoose/CaveView.js.git"
   },
-  "keywords": [ "cave", "survey", "3d", "webgl", "browser", "survex", "therion" ],
+  "keywords": [
+    "cave",
+    "survey",
+    "3d",
+    "webgl",
+    "browser",
+    "survex",
+    "therion"
+  ],
   "author": "aardgoose",
   "license": "MIT",
   "bugs": {

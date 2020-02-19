@@ -41,7 +41,7 @@ Svx3dHandler.prototype.parse = function ( dataStream, metadata ) {
 
 		// work around lack of +init string support in proj4js
 
-		var matches = sourceCRS.match( /\+init=(.*)\s/);
+		var matches = sourceCRS.match( /\+init=(.*)(?:\s|$)/);
 
 		if ( matches && matches.length === 2 ) {
 
@@ -50,6 +50,12 @@ Svx3dHandler.prototype.parse = function ( dataStream, metadata ) {
 			case 'epsg:27700' :
 
 				sourceCRS = '+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +datum=OSGB36 +units=m +no_defs';
+
+				break;
+
+			case 'epsg:3794':
+
+				sourceCRS = "+proj=tmerc +lat_0=0 +lon_0=15 +k=0.9999 +x_0=500000 +y_0=-5000000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs"
 
 				break;
 
