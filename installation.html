@@ -4,34 +4,9 @@
 	<title>CaveView installation</title>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<link type="text/css" href="doc.css" rel="stylesheet"/>
-<!--	<style>
-
-	h1, h2 {
-
-		margin-left: 16px;
-
-	}
-
-	h3, p, pre {
-
-		margin-left: 32px;
-
-	}
-
-	* {
-		font-family: sans-serif;
-	}
-
-	pre {
-		font-family: monospace;
-		font-weight: bold;
-		background-color: #eeeeee;
-		padding: 8px 8px;
-	}
-	</style> -->
 </head>
 <body>
-<h1>Cave View - installation instructions</h1>
+<h1>Cave View - installation instructions - V2 API</h1>
 <h2>Install CaveView files</h2>
 	<p>A zip archive containing the required files can be found in the <a href="https://github.com/aardgoose/CaveView.js/tree/master/build" >'master' git branch</a>.</p>
 	<p>There is no need to build the JavaScript application from source files unless you would like to modify the application.</p>
@@ -47,9 +22,9 @@
 
 <h3>CaveView.js</h3>
 
-<p>The CaveView application is provided in one javascript file. Include this in the <strong>body</strong> section of the page.</p>
+<p>The CaveView application is provided in one javascript file. Include this in the <strong>body</strong> section of the page. <strong>NOTE: The filename has changed for the V2 API.</strong></p>
 
-<pre>	&lt;script type="text/javascript" src="%path%/CaveView/js/CaveView.js" &gt;&lt;/script&gt;</pre>
+<pre>	&lt;script type="text/javascript" src="%path%/CaveView/js/CaveView2.js" &gt;&lt;/script&gt;</pre>
 
 <h3>Add a container element</h3>
 
@@ -69,16 +44,23 @@
 
 		// the configuration object specifies the location of CaveView, surveys and terrain files
 
-		CV.UI.init( '% element-id %', {
+		var viewer = new CV2.CaveViewer( '% element-id %', {
 			home: '% location of the unzipped CaveView directory on the survey %',
 			surveyDirectory: '% location of the survey files on the server %',
 			terrainDirectory: '% location of the terrain files on the server %'
 		} );
 
+		// if using the full user interface (UI)
+
+		var ui = new CV2.CaveViewUI( viewer );
 
 		// load a single survey to display
 
-		CV.UI.loadCave( '% survey filename %' );
+		ui.loadCave( '% survey filename %' );
+
+		// or without the user interface
+
+		viewer.loadCave( '% survey filename %' );
 
 	}
 
@@ -88,12 +70,28 @@
 <p>alternatively provide a list of surveys to display, by replacing the loadCave() function call with loadCaveList() :</p>
 
 <pre>
-	CV.loadCaveList( [ '% survey filename 1 %', '% survey filename 2 %', '% survey filename 3 %' ] );
+	ui.loadCaveList( [ '% survey filename 1 %', '% survey filename 2 %', '% survey filename 3 %' ] );
 </pre>
 
 <p>This can be automatically executed on page load by including a page load handler in the page <strong>body</strong> tag:</p>
 <pre>&lt;body onload="onload();" &gt;</pre>
 
 <p>CaveView should now display when the page is viewed.</p>
+<p>The example files included demonstrate using multiple viewers on a page,
+changing the default view settings and altering the appearance of the viewer.</p>
+
+<h3>Removal</h3>
+
+<p>To remove the viewer from a page and reclaim memory used promptly:</p>
+<pre>
+	ui.dispose();
+	ui = null;
+	viewer = null;
+</pre>
+<p>Or if not using the UI, just the viewer:</p>
+<pre>
+	viewer.dispose();
+	viewer = null;
+</pre>
 </body>
 </html>
