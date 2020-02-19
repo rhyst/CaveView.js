@@ -37,6 +37,8 @@ pre {
 }
 
 dd > span {
+	display: inline-block;
+	padding-right: 5px;
 	background: #aaaaaa;
 }
 
@@ -45,7 +47,7 @@ dd > span::before {
 }
 
 dd > span::after {
-	content: "] "
+	content: "]"
 }
 
 dt {
